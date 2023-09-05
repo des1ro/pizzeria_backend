@@ -1,0 +1,4 @@
+enum EmployeeRole {
+  Chef,
+  Waiter,
+}
