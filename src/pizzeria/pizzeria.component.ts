@@ -14,7 +14,7 @@ export class Pizzeria {
   orderTakeaway(pizzaNames: string[], discount = Discount.none): void {
     const properties = this.getOrderProperties(pizzaNames);
     const order = new OrderDTO(properties.orderId, discount, properties.pizzas);
-    this.orderService.addOrderToQueque(order);
+    this.addOrderToRightQueque(order);
   }
   orderInRestaurant(
     pizzaNames: string[],
@@ -30,7 +30,7 @@ export class Pizzeria {
       properties.pizzas,
       table.tableId
     );
-    this.orderService.addOrderToQueque(order);
+    this.addOrderToRightQueque(order);
   }
   makeOrderInProgress(order: OrderDTO) {
     const cheff = this.employeeService.getCheffToOrder();
@@ -54,5 +54,12 @@ export class Pizzeria {
       this.pizzaService.getIngredientsMapOfOrder(pizzaNames);
     this.pizzaService.updateIngredientsAfterOrder(ingredientsMap);
     return { orderId, pizzas };
+  }
+  private addOrderToRightQueque(order: OrderDTO) {
+    if (this.employeeService.isCheffAvailable()) {
+      this.makeOrderInProgress(order);
+      return;
+    }
+    this.orderService.addOrderToQueque(order);
   }
 }
