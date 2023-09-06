@@ -1,8 +1,9 @@
 type ErrorName =
   | "PERMISION_DENIED"
-  | "TABLE_ERROR"
+  | "RESERVATION_ERROR"
   | "ORDER_ERROR"
-  | "EMPLOYEE_ERROR";
+  | "EMPLOYEE_ERROR"
+  | "PIZZA_SERVICE_ERROR";
 export class PizzeriaError extends Error {
   name: string;
   message: string;

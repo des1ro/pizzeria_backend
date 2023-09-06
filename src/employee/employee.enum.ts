@@ -1,4 +1,0 @@
-enum EmployeeRole {
-  Chef,
-  Waiter,
-}
