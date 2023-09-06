@@ -24,6 +24,9 @@ export class EmployeeService {
       message: "There isn't free cheffs",
     });
   }
+  isCheffAvailable() {
+    return this.availableCheffs.size;
+  }
   relievedCheff(cheff: EmployeeDTO) {
     if (this.takenCheffs.delete(cheff)) {
       this.availableCheffs.add(cheff);
