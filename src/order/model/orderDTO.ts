@@ -1,3 +1,4 @@
+import { Discount } from "../../discounts/discount.enum";
 import { PizzaDTO } from "../../pizza/model/pizzaDTO";
 
 export class OrderDTO {

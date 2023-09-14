@@ -26,17 +26,15 @@ export class PizzaService {
     const map = new Map(this.ingredients);
     for (const pizzaName of pizzaNames) {
       const pizza = this.findPizzaByName(pizzaName);
-      if (pizza) {
-        for (const ingredient of pizza.ingredients) {
-          const value = map.get(ingredient);
-          if (value === undefined || value <= 0) {
-            throw new PizzeriaError({
-              name: "PIZZA_SERVICE_ERROR",
-              message: "Insufficient amount of ingredients",
-            });
-          }
-          map.set(ingredient, value - 1);
+      for (const ingredient of pizza.ingredients) {
+        const value = map.get(ingredient);
+        if (value === undefined || value <= 0) {
+          throw new PizzeriaError({
+            name: "PIZZA_SERVICE_ERROR",
+            message: "Insufficient amount of ingredients",
+          });
         }
+        map.set(ingredient, value - 1);
       }
     }
     return map;

@@ -1,0 +1,87 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Reservation service test suite Add table to service test suite Should add table to service 1`] = `
+ReservationService {
+  "freeTables": Set {
+    TableDTO {
+      "seats": 2,
+      "tableId": 1,
+    },
+    TableDTO {
+      "seats": 5,
+      "tableId": 2,
+    },
+    TableDTO {
+      "seats": 7,
+      "tableId": 3,
+    },
+  },
+  "takenTables": Set {},
+}
+`;
+
+exports[`Reservation service test suite Set table to available test suite Should find table by id and set to available 1`] = `
+ReservationService {
+  "freeTables": Set {
+    TableDTO {
+      "seats": 7,
+      "tableId": 4,
+    },
+  },
+  "takenTables": Set {
+    TableDTO {
+      "seats": 2,
+      "tableId": 1,
+    },
+    TableDTO {
+      "seats": 5,
+      "tableId": 2,
+    },
+    TableDTO {
+      "seats": 7,
+      "tableId": 3,
+    },
+    TableDTO {
+      "seats": 4,
+      "tableId": 5,
+    },
+    TableDTO {
+      "seats": 6,
+      "tableId": 6,
+    },
+    TableDTO {
+      "seats": 2,
+      "tableId": 7,
+    },
+    TableDTO {
+      "seats": 8,
+      "tableId": 8,
+    },
+    TableDTO {
+      "seats": 4,
+      "tableId": 9,
+    },
+    TableDTO {
+      "seats": 6,
+      "tableId": 10,
+    },
+  },
+}
+`;
+
+exports[`Reservation service test suite Should add table to taken and remove from freeTabeles 1`] = `
+ReservationService {
+  "freeTables": Set {
+    TableDTO {
+      "seats": 5,
+      "tableId": 2,
+    },
+  },
+  "takenTables": Set {
+    TableDTO {
+      "seats": 2,
+      "tableId": 1,
+    },
+  },
+}
+`;

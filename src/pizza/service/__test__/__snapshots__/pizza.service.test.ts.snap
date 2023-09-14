@@ -1,0 +1,154 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`PizzaService test suite Get ingredients map of order test suite Should find pizza by name array and return map of ingredients needed to cook them 1`] = `
+PizzaService {
+  "ingredients": Map {
+    "Cheese" => 2,
+    "Peperoni" => 2,
+    "Pineapple" => 2,
+    "Tomato" => 2,
+  },
+  "pizzaList": Set {
+    PizzaDTO {
+      "ingredients": [
+        "Cheese",
+        "Pineapple",
+      ],
+      "name": "test pizza one",
+      "price": 30,
+    },
+    PizzaDTO {
+      "ingredients": [
+        "Peperoni",
+        "Tomato",
+      ],
+      "name": "test pizza two",
+      "price": 30,
+    },
+  },
+}
+`;
+
+exports[`PizzaService test suite Get ingredients map of order test suite Should find pizza by name array and return map of ingredients needed to cook them 2`] = `
+Map {
+  "Cheese" => 1,
+  "Peperoni" => 1,
+  "Pineapple" => 1,
+  "Tomato" => 1,
+}
+`;
+
+exports[`PizzaService test suite Get ingredients map of order test suite Should throw if there isn't enough ingredients in service 1`] = `
+PizzaService {
+  "ingredients": Map {
+    "Cheese" => 0,
+    "Peperoni" => 2,
+    "Pineapple" => 2,
+    "Tomato" => 2,
+  },
+  "pizzaList": Set {
+    PizzaDTO {
+      "ingredients": [
+        "Cheese",
+        "Pineapple",
+      ],
+      "name": "test pizza one",
+      "price": 30,
+    },
+    PizzaDTO {
+      "ingredients": [
+        "Peperoni",
+        "Tomato",
+      ],
+      "name": "test pizza two",
+      "price": 30,
+    },
+  },
+}
+`;
+
+exports[`PizzaService test suite Get ingredients map of order test suite Should throw pizzeriaError if pizza isn't on pizzalist 1`] = `
+PizzaService {
+  "ingredients": Map {
+    "Cheese" => 2,
+    "Peperoni" => 2,
+    "Pineapple" => 2,
+    "Tomato" => 2,
+  },
+  "pizzaList": Set {
+    PizzaDTO {
+      "ingredients": [
+        "Cheese",
+        "Pineapple",
+      ],
+      "name": "test pizza one",
+      "price": 30,
+    },
+  },
+}
+`;
+
+exports[`PizzaService test suite Should add new ingredient to map 1`] = `
+PizzaService {
+  "ingredients": Map {
+    "Cheese" => 1,
+  },
+  "pizzaList": Set {},
+}
+`;
+
+exports[`PizzaService test suite Should add pizza to pizza list 1`] = `
+PizzaService {
+  "ingredients": Map {},
+  "pizzaList": Set {
+    PizzaDTO {
+      "ingredients": [],
+      "name": "test pizza",
+      "price": 30,
+    },
+  },
+}
+`;
+
+exports[`PizzaService test suite Should find pizza by name and  delete from sevice 1`] = `
+PizzaService {
+  "ingredients": Map {},
+  "pizzaList": Set {},
+}
+`;
+
+exports[`PizzaService test suite Should find pizza by name and  delete from sevice 2`] = `
+PizzaService {
+  "ingredients": Map {},
+  "pizzaList": Set {},
+}
+`;
+
+exports[`PizzaService test suite Should update amount of ingredient if its already in map 1`] = `
+PizzaService {
+  "ingredients": Map {
+    "Eggs" => 23,
+  },
+  "pizzaList": Set {},
+}
+`;
+
+exports[`PizzaService test suite Should update ingredients in service 1`] = `
+PizzaService {
+  "ingredients": Map {
+    "Peperoni" => 20,
+    "Tomato" => 20,
+  },
+  "pizzaList": Set {},
+}
+`;
+
+exports[`PizzaService test suite Should update ingredients in service 2`] = `
+PizzaService {
+  "ingredients": Map {
+    "Peperoni" => 20,
+    "Tomato" => 20,
+  },
+  "pizzaList": Set {},
+}
+`;
