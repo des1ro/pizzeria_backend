@@ -1,6 +1,8 @@
-export const transform = {
-  "^.+\\.tsx?$": "ts-jest",
+module.exports = {
+  transform: {
+    "^.+\\.tsx?$": "ts-jest",
+  },
+  testRegex: "(/__tests__/.*|(\\.|/)(test|spec))\\.(jsx?|tsx?)$",
+  moduleFileExtensions: ["ts", "tsx", "js", "jsx", "json", "node"],
+  testEnvironment: "node",
 };
-export const testRegex = "(/__tests__/.*|(\\.|/)(test|spec))\\.(jsx?|tsx?)$";
-export const moduleFileExtensions = ["ts", "tsx", "js", "jsx", "json", "node"];
-export const testEnvironment = "node";

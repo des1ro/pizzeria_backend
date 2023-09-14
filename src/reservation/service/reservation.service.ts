@@ -6,7 +6,17 @@ export class ReservationService {
     private readonly freeTables = new Set<TableDTO>(),
     private readonly takenTables = new Set<TableDTO>()
   ) {}
+  addTable(table: TableDTO): void {
+    if (!this.freeTables.has(table)) {
+      this.freeTables.add(table);
+      return;
+    }
 
+    throw new PizzeriaError({
+      name: "RESERVATION_ERROR",
+      message: "Table is already in service",
+    });
+  }
   getATable(seats: number) {
     let tableToFind: TableDTO | undefined = undefined;
     for (const table of this.freeTables) {

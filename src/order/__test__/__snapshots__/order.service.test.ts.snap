@@ -1,0 +1,191 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Order service test suite Complete order test suite Should complete order and return cheff 1`] = `
+OrderService {
+  "completedOrders": Set {
+    OrderDTO {
+      "discount": 0,
+      "id": 1,
+      "products": [
+        PizzaDTO {
+          "ingredients": [],
+          "name": "test pizza one",
+          "price": 20,
+        },
+        PizzaDTO {
+          "ingredients": [],
+          "name": "test pizza two",
+          "price": 50,
+        },
+      ],
+      "tableId": undefined,
+    },
+  },
+  "orderInProgress": Map {
+    OrderDTO {
+      "discount": 0,
+      "id": 1,
+      "products": [
+        PizzaDTO {
+          "ingredients": [],
+          "name": "test pizza one",
+          "price": 20,
+        },
+        PizzaDTO {
+          "ingredients": [],
+          "name": "test pizza two",
+          "price": 50,
+        },
+      ],
+      "tableId": undefined,
+    } => EmployeeDTO {
+      "name": "test employee",
+      "role": "Cheff",
+    },
+  },
+  "orderQueque": Set {},
+}
+`;
+
+exports[`Order service test suite Complete order test suite Should throw PizzeriaError if order wasn't in order in progress 1`] = `
+OrderService {
+  "completedOrders": Set {},
+  "orderInProgress": Map {},
+  "orderQueque": Set {},
+}
+`;
+
+exports[`Order service test suite Make order in progress test suite Should add order to make in progress 1`] = `
+OrderService {
+  "completedOrders": Set {},
+  "orderInProgress": Map {
+    OrderDTO {
+      "discount": 0,
+      "id": 1,
+      "products": [
+        PizzaDTO {
+          "ingredients": [],
+          "name": "test pizza one",
+          "price": 20,
+        },
+        PizzaDTO {
+          "ingredients": [],
+          "name": "test pizza two",
+          "price": 50,
+        },
+      ],
+      "tableId": undefined,
+    } => EmployeeDTO {
+      "name": "test employee",
+      "role": "Cheff",
+    },
+  },
+  "orderQueque": Set {},
+}
+`;
+
+exports[`Order service test suite Should add order to queque 1`] = `
+OrderService {
+  "completedOrders": Set {},
+  "orderInProgress": Map {},
+  "orderQueque": Set {
+    OrderDTO {
+      "discount": 0,
+      "id": 1,
+      "products": [
+        PizzaDTO {
+          "ingredients": [],
+          "name": "test pizza one",
+          "price": 20,
+        },
+        PizzaDTO {
+          "ingredients": [],
+          "name": "test pizza two",
+          "price": 50,
+        },
+      ],
+      "tableId": undefined,
+    },
+  },
+}
+`;
+
+exports[`Order service test suite Should get array of completed orders 1`] = `
+OrderService {
+  "completedOrders": Set {
+    OrderDTO {
+      "discount": 0,
+      "id": 1,
+      "products": [
+        PizzaDTO {
+          "ingredients": [],
+          "name": "test pizza one",
+          "price": 20,
+        },
+        PizzaDTO {
+          "ingredients": [],
+          "name": "test pizza two",
+          "price": 50,
+        },
+      ],
+      "tableId": undefined,
+    },
+    OrderDTO {
+      "discount": 40,
+      "id": 2,
+      "products": [],
+      "tableId": undefined,
+    },
+  },
+  "orderInProgress": Map {},
+  "orderQueque": Set {},
+}
+`;
+
+exports[`Order service test suite Should make new id for order 1`] = `
+OrderService {
+  "completedOrders": Set {
+    OrderDTO {
+      "discount": 0,
+      "id": 1,
+      "products": [
+        PizzaDTO {
+          "ingredients": [],
+          "name": "test pizza one",
+          "price": 20,
+        },
+        PizzaDTO {
+          "ingredients": [],
+          "name": "test pizza two",
+          "price": 50,
+        },
+      ],
+      "tableId": undefined,
+    },
+    OrderDTO {
+      "discount": 20,
+      "id": 2,
+      "products": [],
+      "tableId": undefined,
+    },
+    OrderDTO {
+      "discount": 20,
+      "id": 3,
+      "products": [],
+      "tableId": undefined,
+    },
+  },
+  "orderInProgress": Map {
+    OrderDTO {
+      "discount": 20,
+      "id": 4,
+      "products": [],
+      "tableId": undefined,
+    } => EmployeeDTO {
+      "name": "test employee",
+      "role": "Cheff",
+    },
+  },
+  "orderQueque": Set {},
+}
+`;

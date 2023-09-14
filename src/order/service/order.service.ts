@@ -30,7 +30,8 @@ export class OrderService {
   }
   completeOrderAndReturnCheff(order: OrderDTO): EmployeeDTO {
     const cheff = this.orderInProgress.get(order);
-    if (this.orderInProgress.delete(order) && cheff) {
+    if (this.orderInProgress.has(order) && cheff) {
+      this.completedOrders.delete(order);
       this.completedOrders.add(order);
       return cheff;
     }
@@ -39,8 +40,15 @@ export class OrderService {
       message: "There is no order in order in progress",
     });
   }
-  getCompletedOrders() {
-    return this.completedOrders;
+  getOrderPrice(order: OrderDTO): number {
+    return (
+      (order.products.reduce((total, pizza) => total + pizza.price, 0) *
+        (100 - order.discount)) /
+      100
+    );
+  }
+  getCompletedOrdersArray() {
+    return Array.from(this.completedOrders);
   }
   getOrderId(): number {
     return (

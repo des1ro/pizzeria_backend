@@ -1,0 +1,118 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Employee service test suite Should add cheff to crew 1`] = `
+EmployeeService {
+  "availableCheffs": Set {
+    EmployeeDTO {
+      "name": "test employee one",
+      "role": "Cheff",
+    },
+  },
+  "availableWaiters": Set {},
+  "takenCheffs": Set {},
+}
+`;
+
+exports[`Employee service test suite Should relived cheff 1`] = `
+EmployeeDTO {
+  "name": "test employee one",
+  "role": "Cheff",
+}
+`;
+
+exports[`Employee service test suite Should relived cheff 2`] = `
+EmployeeService {
+  "availableCheffs": Set {
+    EmployeeDTO {
+      "name": "test employee one",
+      "role": "Cheff",
+    },
+  },
+  "availableWaiters": Set {},
+  "takenCheffs": Set {},
+}
+`;
+
+exports[`Employee service test suite Should return false if cheff isn't available 1`] = `
+EmployeeService {
+  "availableCheffs": Set {},
+  "availableWaiters": Set {},
+  "takenCheffs": Set {},
+}
+`;
+
+exports[`Employee service test suite Should return true if cheff is available 1`] = `
+EmployeeService {
+  "availableCheffs": Set {
+    EmployeeDTO {
+      "name": "test employee one",
+      "role": "Cheff",
+    },
+  },
+  "availableWaiters": Set {},
+  "takenCheffs": Set {},
+}
+`;
+
+exports[`Employee service test suite Should return which is firs on the list 1`] = `
+EmployeeDTO {
+  "name": "test employee one",
+  "role": "Cheff",
+}
+`;
+
+exports[`Employee service test suite Should return which is firs on the list 2`] = `
+EmployeeDTO {
+  "name": "test employee three",
+  "role": "Cheff",
+}
+`;
+
+exports[`Employee service test suite Should return which is firs on the list 3`] = `
+EmployeeService {
+  "availableCheffs": Set {
+    EmployeeDTO {
+      "name": "test employee two",
+      "role": "Cheff",
+    },
+  },
+  "availableWaiters": Set {},
+  "takenCheffs": Set {
+    EmployeeDTO {
+      "name": "test employee one",
+      "role": "Cheff",
+    },
+    EmployeeDTO {
+      "name": "test employee three",
+      "role": "Cheff",
+    },
+  },
+}
+`;
+
+exports[`Employee service test suite Should throw PizzeriaError if there is not cheff wasn't taken 1`] = `
+EmployeeDTO {
+  "name": "test employee one",
+  "role": "Cheff",
+}
+`;
+
+exports[`Employee service test suite Should throw PizzeriaError if there is not cheff wasn't taken 2`] = `
+EmployeeService {
+  "availableCheffs": Set {
+    EmployeeDTO {
+      "name": "test employee one",
+      "role": "Cheff",
+    },
+  },
+  "availableWaiters": Set {},
+  "takenCheffs": Set {},
+}
+`;
+
+exports[`Employee service test suite Should throw PizzeriaError if there isn't free cheff 1`] = `
+EmployeeDTO {
+  "name": "test employee one",
+  "role": "Cheff",
+}
+`;

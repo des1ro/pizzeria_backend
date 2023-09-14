@@ -3,6 +3,8 @@ import { OrderService } from "../order/service/order.service";
 import { EmployeeService } from "../employee/service/employee.service";
 import { OrderDTO } from "../order/model/orderDTO";
 import { PizzaService } from "../pizza/service/pizza.service";
+import { Discount } from "../discounts/discount.enum";
+import { PizzaDTO } from "../pizza/model/pizzaDTO";
 
 export class Pizzeria {
   constructor(
@@ -11,15 +13,19 @@ export class Pizzeria {
     private readonly employeeService = new EmployeeService(),
     private readonly pizzaService = new PizzaService()
   ) {}
-  orderTakeaway(pizzaNames: string[], discount = Discount.none): void {
+  orderTakeawayAndGetRecipe(
+    pizzaNames: string[],
+    discount = Discount.none
+  ): number {
     const properties = this.getOrderProperties(pizzaNames);
     const order = new OrderDTO(properties.orderId, discount, properties.pizzas);
     this.addOrderToRightQueque(order);
+    return this.orderService.getOrderPrice(order);
   }
   orderInRestaurant(
     pizzaNames: string[],
-    discount = Discount.none,
-    seats: number
+    seats: number,
+    discount = Discount.none
   ): void {
     const table = this.revservationService.getATable(seats);
     const properties = this.getOrderProperties(pizzaNames);
@@ -36,18 +42,25 @@ export class Pizzeria {
     const cheff = this.employeeService.getCheffToOrder();
     this.orderService.makeOrderInProgress(order, cheff);
   }
-  completeOrder(order: OrderDTO): void {
+  completeOrderAndGetRecipe(order: OrderDTO): number {
     const cheff = this.orderService.completeOrderAndReturnCheff(order);
     this.employeeService.relievedCheff(cheff);
+    return this.orderService.getOrderPrice(order);
   }
   setTableToAvailable(order: OrderDTO) {
     const tableId = order.tableId;
     this.revservationService.setTableToAvailable(tableId);
   }
-  getCompletedOrders() {
-    return this.orderService.getCompletedOrders();
+  getCompletedOrdersArray(): OrderDTO[] {
+    return this.orderService.getCompletedOrdersArray();
   }
-  private getOrderProperties(pizzaNames: string[]) {
+  addCheffToCrew(name: string) {
+    this.employeeService.addCheffToCrew(name);
+  }
+  private getOrderProperties(pizzaNames: string[]): {
+    orderId: number;
+    pizzas: PizzaDTO[];
+  } {
     const orderId = this.orderService.getOrderId();
     const pizzas = this.pizzaService.getPizzaFromNames(pizzaNames);
     const ingredientsMap =
