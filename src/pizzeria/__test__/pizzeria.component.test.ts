@@ -4,7 +4,6 @@ import { EmployeeDTO } from "../../employee/model/employeeDTO";
 import { EmployeeService } from "../../employee/service/employee.service";
 import { OrderDTO } from "../../order/model/orderDTO";
 import { OrderService } from "../../order/service/order.service";
-import { Ingredients } from "../../pizza/enum/ingredients.enum";
 import { PizzaDTO } from "../../pizza/model/pizzaDTO";
 import { PizzaService } from "../../pizza/service/pizza.service";
 import { ReservationService } from "../../reservation/service/reservation.service";
@@ -27,7 +26,6 @@ jest.mock("../../pizza/service/pizza.service", () => {
     PizzaService: jest.fn().mockImplementation(() => {
       return {
         addIngredient: jest.fn(),
-        getIngredientsMapOfOrder: jest.fn(),
         updateIngredientsAfterOrder: jest.fn(),
         getPizzaFromNames: jest.fn(),
       };
@@ -41,7 +39,6 @@ jest.mock("../../order/service/order.service", () => {
         addOrderToQueque: jest.fn(),
         makeOrderInProgress: jest.fn(),
         completeOrderAndReturnCheff: jest.fn(),
-        getOrderId: jest.fn(),
         getOrderPrice: jest.fn(),
         getCompletedOrdersArray: jest.fn(),
       };
@@ -81,26 +78,13 @@ describe("Pizzeria component test suite", () => {
   });
   beforeAll(() => {
     mockedCheff = new EmployeeDTO("test cheff", EmployeeRole.Cheff);
-
     mockedPizza = new PizzaDTO("test pizza", 20, []);
-    mockedPizzasNames = ["test pizza one", "test pizza two"];
   });
   describe("Order test suite", () => {
     afterAll(() => {
       jest.resetAllMocks();
     });
-    beforeAll(() => {
-      jest.spyOn(mockedOrderService, "getOrderId").mockReturnValue(1);
-      const mockedIngredientsMap = new Map<Ingredients, number>();
-      mockedIngredientsMap.set(Ingredients.Cheese, 2);
-      jest
-        .spyOn(mockedPizzaService, "getIngredientsMapOfOrder")
-        .mockReturnValue(mockedIngredientsMap);
-      jest
-        .spyOn(mockedPizzaService, "getPizzaFromNames")
-        .mockReturnValue([mockedPizza]);
-    });
-    it("Should use properies, make order and add to queque if cheff isn't avaliable ", () => {
+    it("Should make order and add to queque if cheff isn't avaliable ", () => {
       //Given
       jest
         .spyOn(mockedEmploeeService, "isCheffAvailable")
@@ -109,12 +93,8 @@ describe("Pizzeria component test suite", () => {
         .spyOn(mockedOrderService, "getOrderPrice")
         .mockReturnValueOnce(mockedPizza.price);
       //When
-      const result =
-        objectUnderTest.orderTakeawayAndGetRecipe(mockedPizzasNames);
+      const result = objectUnderTest.orderTakeawayAndGetRecipe([mockedPizza]);
       //Then
-      expect(mockedOrderService.getOrderId).toBeCalledTimes(1);
-      expect(mockedPizzaService.getPizzaFromNames).toBeCalledTimes(1);
-      expect(mockedPizzaService.getIngredientsMapOfOrder).toBeCalledTimes(1);
       expect(mockedPizzaService.updateIngredientsAfterOrder).toBeCalledTimes(1);
       expect(mockedEmploeeService.isCheffAvailable).toBeCalledTimes(1);
       expect(mockedOrderService.makeOrderInProgress).toBeCalledTimes(0);
@@ -133,12 +113,8 @@ describe("Pizzeria component test suite", () => {
         .spyOn(mockedOrderService, "getOrderPrice")
         .mockReturnValueOnce(mockedPizza.price);
       //When
-      const result =
-        objectUnderTest.orderTakeawayAndGetRecipe(mockedPizzasNames);
-      //Then
-      expect(mockedOrderService.getOrderId).toBeCalledTimes(1);
-      expect(mockedPizzaService.getPizzaFromNames).toBeCalledTimes(1);
-      expect(mockedPizzaService.getIngredientsMapOfOrder).toBeCalledTimes(1);
+      const result = objectUnderTest.orderTakeawayAndGetRecipe([mockedPizza]);
+      //Then;
       expect(mockedPizzaService.updateIngredientsAfterOrder).toBeCalledTimes(1);
       expect(mockedEmploeeService.isCheffAvailable).toBeCalledTimes(1);
       expect(mockedOrderService.makeOrderInProgress).toBeCalledTimes(1);
@@ -162,11 +138,8 @@ describe("Pizzeria component test suite", () => {
         .spyOn(mockedOrderService, "getOrderPrice")
         .mockReturnValueOnce(mockedPizza.price);
       //When
-      objectUnderTest.orderInRestaurant(mockedPizzasNames, mockedSeats);
+      objectUnderTest.orderInRestaurant([mockedPizza], mockedSeats);
       //Then
-      expect(mockedOrderService.getOrderId).toBeCalledTimes(1);
-      expect(mockedPizzaService.getPizzaFromNames).toBeCalledTimes(1);
-      expect(mockedPizzaService.getIngredientsMapOfOrder).toBeCalledTimes(1);
       expect(mockedPizzaService.updateIngredientsAfterOrder).toBeCalledTimes(1);
       expect(mockedEmploeeService.isCheffAvailable).toBeCalledTimes(1);
       expect(mockedOrderService.makeOrderInProgress).toBeCalledTimes(0);
@@ -188,11 +161,8 @@ describe("Pizzeria component test suite", () => {
         .spyOn(mockedOrderService, "getOrderPrice")
         .mockReturnValueOnce(mockedPizza.price);
       //When
-      objectUnderTest.orderInRestaurant(mockedPizzasNames, mockedSeats);
+      objectUnderTest.orderInRestaurant([mockedPizza], mockedSeats);
       //Then
-      expect(mockedOrderService.getOrderId).toBeCalledTimes(1);
-      expect(mockedPizzaService.getPizzaFromNames).toBeCalledTimes(1);
-      expect(mockedPizzaService.getIngredientsMapOfOrder).toBeCalledTimes(1);
       expect(mockedPizzaService.updateIngredientsAfterOrder).toBeCalledTimes(1);
       expect(mockedEmploeeService.isCheffAvailable).toBeCalledTimes(1);
       expect(mockedOrderService.makeOrderInProgress).toBeCalledTimes(1);
@@ -201,7 +171,7 @@ describe("Pizzeria component test suite", () => {
   });
   it("Should make order in progress", () => {
     //Given
-    const mockedOrder = new OrderDTO(1, Discount.none, [mockedPizza]);
+    const mockedOrder = new OrderDTO("test uuid", Discount.none, [mockedPizza]);
     jest
       .spyOn(mockedEmploeeService, "getCheffToOrder")
       .mockReturnValue(mockedCheff);
@@ -215,7 +185,7 @@ describe("Pizzeria component test suite", () => {
   });
   it("Should complete order and return recipe", () => {
     //Given
-    const mockedOrder = new OrderDTO(1, Discount.none, [mockedPizza]);
+    const mockedOrder = new OrderDTO("test uuid", Discount.none, [mockedPizza]);
     jest
       .spyOn(mockedOrderService, "completeOrderAndReturnCheff")
       .mockReturnValueOnce(mockedCheff);
@@ -230,7 +200,12 @@ describe("Pizzeria component test suite", () => {
   });
   it("Should set table to be available", () => {
     //Given
-    const mockedOrder = new OrderDTO(1, Discount.none, [mockedPizza], 42);
+    const mockedOrder = new OrderDTO(
+      "test uuid",
+      Discount.none,
+      [mockedPizza],
+      42
+    );
     //When
     objectUnderTest.setTableToAvailable(mockedOrder);
     //Then

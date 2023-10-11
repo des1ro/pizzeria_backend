@@ -1,5 +1,5 @@
 import { EmployeeDTO } from "../../employee/model/employeeDTO";
-import { PizzeriaError } from "../../exceptions/pizzeria.exceptions";
+import { OrderServiceError } from "../error/order.exceptions";
 import { OrderDTO } from "../model/orderDTO";
 
 export class OrderService {
@@ -11,8 +11,8 @@ export class OrderService {
 
   addOrderToQueque(order: OrderDTO): void {
     if (this.orderQueque.has(order)) {
-      throw new PizzeriaError({
-        name: "ORDER_ERROR",
+      throw new OrderServiceError({
+        name: "QUEQUE_ERROR",
         message: "Order is already in queque",
       });
     }
@@ -23,8 +23,8 @@ export class OrderService {
       this.orderInProgress.set(order, cheff);
       return;
     }
-    throw new PizzeriaError({
-      name: "ORDER_ERROR",
+    throw new OrderServiceError({
+      name: "QUEQUE_ERROR",
       message: "There is no such as order in queque",
     });
   }
@@ -35,8 +35,8 @@ export class OrderService {
       this.completedOrders.add(order);
       return cheff;
     }
-    throw new PizzeriaError({
-      name: "ORDER_ERROR",
+    throw new OrderServiceError({
+      name: "QUEQUE_ERROR",
       message: "There is no order in order in progress",
     });
   }
@@ -49,13 +49,5 @@ export class OrderService {
   }
   getCompletedOrdersArray() {
     return Array.from(this.completedOrders);
-  }
-  getOrderId(): number {
-    return (
-      this.orderInProgress.size +
-      this.orderQueque.size +
-      this.completedOrders.size +
-      1
-    );
   }
 }

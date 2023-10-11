@@ -1,4 +1,4 @@
-import { PizzeriaError } from "../../exceptions/pizzeria.exceptions";
+import { PizzeriaError } from "../../pizzeria/error/pizzeria.exceptions";
 import { TableDTO } from "../table/tableDTO";
 
 export class ReservationService {
