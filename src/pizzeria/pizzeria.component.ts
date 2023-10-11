@@ -5,6 +5,7 @@ import { OrderDTO } from "../order/model/orderDTO";
 import { PizzaService } from "../pizza/service/pizza.service";
 import { Discount } from "../discounts/discount.enum";
 import { PizzaDTO } from "../pizza/model/pizzaDTO";
+import { randomUUID } from "crypto";
 
 export class Pizzeria {
   constructor(
@@ -14,31 +15,26 @@ export class Pizzeria {
     private readonly pizzaService = new PizzaService()
   ) {}
   orderTakeawayAndGetRecipe(
-    pizzaNames: string[],
+    pizzas: PizzaDTO[],
     discount = Discount.none
   ): number {
-    const properties = this.getOrderProperties(pizzaNames);
-    const order = new OrderDTO(properties.orderId, discount, properties.pizzas);
+    const uuid = this.getOrderUuidAndPrepareIngredients(pizzas);
+    const order = new OrderDTO(uuid, discount, pizzas);
     this.addOrderToRightQueque(order);
     return this.orderService.getOrderPrice(order);
   }
   orderInRestaurant(
-    pizzaNames: string[],
+    pizzas: PizzaDTO[],
     seats: number,
     discount = Discount.none
   ): void {
     const table = this.revservationService.getATable(seats);
-    const properties = this.getOrderProperties(pizzaNames);
+    const uuid = this.getOrderUuidAndPrepareIngredients(pizzas);
     this.revservationService.bookATable(table);
-    const order = new OrderDTO(
-      properties.orderId,
-      discount,
-      properties.pizzas,
-      table.tableId
-    );
+    const order = new OrderDTO(uuid, discount, pizzas, table.tableId);
     this.addOrderToRightQueque(order);
   }
-  makeOrderInProgress(order: OrderDTO) {
+  makeOrderInProgress(order: OrderDTO): void {
     const cheff = this.employeeService.getCheffToOrder();
     this.orderService.makeOrderInProgress(order, cheff);
   }
@@ -47,7 +43,7 @@ export class Pizzeria {
     this.employeeService.relievedCheff(cheff);
     return this.orderService.getOrderPrice(order);
   }
-  setTableToAvailable(order: OrderDTO) {
+  setTableToAvailable(order: OrderDTO): void {
     const tableId = order.tableId;
     this.revservationService.setTableToAvailable(tableId);
   }
@@ -57,16 +53,10 @@ export class Pizzeria {
   addCheffToCrew(name: string) {
     this.employeeService.addCheffToCrew(name);
   }
-  private getOrderProperties(pizzaNames: string[]): {
-    orderId: number;
-    pizzas: PizzaDTO[];
-  } {
-    const orderId = this.orderService.getOrderId();
-    const pizzas = this.pizzaService.getPizzaFromNames(pizzaNames);
-    const ingredientsMap =
-      this.pizzaService.getIngredientsMapOfOrder(pizzaNames);
-    this.pizzaService.updateIngredientsAfterOrder(ingredientsMap);
-    return { orderId, pizzas };
+  private getOrderUuidAndPrepareIngredients(pizzas: PizzaDTO[]): string {
+    const orderUuid = randomUUID();
+    this.pizzaService.updateIngredientsAfterOrder(pizzas);
+    return orderUuid;
   }
   private addOrderToRightQueque(order: OrderDTO) {
     if (this.employeeService.isCheffAvailable()) {

@@ -1,10 +1,13 @@
 import { Discount } from "../../discounts/discount.enum";
 import { EmployeeRole } from "../../employee/enum/employee.enum";
 import { EmployeeDTO } from "../../employee/model/employeeDTO";
-import { PizzeriaError } from "../../exceptions/pizzeria.exceptions";
 import { PizzaDTO } from "../../pizza/model/pizzaDTO";
+import { OrderServiceError } from "../error/order.exceptions";
 import { OrderDTO } from "../model/orderDTO";
 import { OrderService } from "../service/order.service";
+jest.mock("crypto", () => ({
+  randomUUID: jest.fn().mockReturnValue("test-uuid"),
+}));
 describe("Order service test suite", () => {
   let objectUnderTest: OrderService;
   let mockedOrderOne: OrderDTO;
@@ -18,7 +21,7 @@ describe("Order service test suite", () => {
     const mockedPizzaTwo = new PizzaDTO("test pizza two", 50, []);
     mockedCheff = new EmployeeDTO("test employee", EmployeeRole.Cheff);
     mockedPizzas = [mockedPizzaOne, mockedPizzaTwo];
-    mockedOrderOne = new OrderDTO(1, Discount.none, mockedPizzas);
+    mockedOrderOne = new OrderDTO("1", Discount.none, mockedPizzas);
   });
   it("Should add order to queque", () => {
     //When
@@ -26,43 +29,34 @@ describe("Order service test suite", () => {
     //Then
     expect(objectUnderTest).toMatchSnapshot();
   });
-  it("Should throw PizzeriaError if order it's already in queque", () => {
-    //Given
+  it("Should throw OrderServiceError if order it's already in queque", () => {
     //When
     objectUnderTest.addOrderToQueque(mockedOrderOne);
     //Then
     expect(() => objectUnderTest.addOrderToQueque(mockedOrderOne)).toThrow(
-      PizzeriaError
+      OrderServiceError
     );
   });
   describe("Make order in progress test suite", () => {
     it("Should add order to make in progress", () => {
-      //Given
-      const mockedQueque = new Set<OrderDTO>();
-      mockedQueque.add(mockedOrderOne);
-      objectUnderTest = new OrderService(new Set<OrderDTO>(), mockedQueque);
       //When
+      objectUnderTest.addOrderToQueque(mockedOrderOne);
       objectUnderTest.makeOrderInProgress(mockedOrderOne, mockedCheff);
       //Then
       expect(objectUnderTest).toMatchSnapshot();
     });
-    it("Should throw PizzeriaError if order isn't in queque ", () => {
+    it("Should throw OrderServiceError if order isn't in queque ", () => {
       //Then
       expect(() =>
         objectUnderTest.makeOrderInProgress(mockedOrderOne, mockedCheff)
-      ).toThrow(PizzeriaError);
+      ).toThrow(OrderServiceError);
     });
   });
   describe("Complete order test suite", () => {
     it("Should complete order and return cheff", () => {
       //Given
-      const mockedOrderInProgress = new Map<OrderDTO, EmployeeDTO>();
-      mockedOrderInProgress.set(mockedOrderOne, mockedCheff);
-      objectUnderTest = new OrderService(
-        new Set<OrderDTO>(),
-        new Set<OrderDTO>(),
-        mockedOrderInProgress
-      );
+      objectUnderTest.addOrderToQueque(mockedOrderOne);
+      objectUnderTest.makeOrderInProgress(mockedOrderOne, mockedCheff);
       //When
       const result =
         objectUnderTest.completeOrderAndReturnCheff(mockedOrderOne);
@@ -70,18 +64,18 @@ describe("Order service test suite", () => {
       expect(objectUnderTest).toMatchSnapshot();
       expect(result).toBe(mockedCheff);
     });
-    it("Should throw PizzeriaError if order wasn't in order in progress", () => {
+    it("Should throw OrderServiceError if order wasn't in order in progress", () => {
       //Then
       expect(objectUnderTest).toMatchSnapshot();
       expect(() =>
         objectUnderTest.completeOrderAndReturnCheff(mockedOrderOne)
-      ).toThrow(PizzeriaError);
+      ).toThrow(OrderServiceError);
     });
   });
   it("Should count order price and return value", () => {
     //Given
     const mockedOrderTwo = new OrderDTO(
-      2,
+      "2",
       Discount.wednesdayForKidsDiscount,
       mockedPizzas
     );
@@ -97,7 +91,7 @@ describe("Order service test suite", () => {
   it("Should get array of completed orders", () => {
     //Given
     const mockedOrderTwo = new OrderDTO(
-      2,
+      "2",
       Discount.studentThursdayDiscount,
       []
     );
@@ -110,28 +104,5 @@ describe("Order service test suite", () => {
     expect(objectUnderTest).toMatchSnapshot();
     expect(resutlt).toBeInstanceOf(Array);
     expect(resutlt.length).toBe(2);
-  });
-  it("Should make new id for order", () => {
-    //Given
-    const mockedOrderTwo = new OrderDTO(2, Discount.codeDiscountOne, []);
-    const mockedOrderThree = new OrderDTO(3, Discount.codeDiscountOne, []);
-    const mockedOrderFour = new OrderDTO(4, Discount.codeDiscountOne, []);
-    const mockedCompletedOrders = new Set<OrderDTO>();
-    const mockedOrderQueque = new Set<OrderDTO>();
-    const mockedOrderInProgress = new Map<OrderDTO, EmployeeDTO>();
-    mockedCompletedOrders.add(mockedOrderOne).add(mockedOrderTwo);
-    mockedCompletedOrders.add(mockedOrderThree);
-    mockedOrderInProgress.set(mockedOrderFour, mockedCheff);
-    objectUnderTest = new OrderService(
-      mockedCompletedOrders,
-      mockedOrderQueque,
-      mockedOrderInProgress
-    );
-    //When
-    const resultOne = objectUnderTest.getOrderId();
-    const expectedResult = 2 + 1 + 1 + 1;
-    //Then
-    expect(resultOne).toBe(expectedResult);
-    expect(objectUnderTest).toMatchSnapshot();
   });
 });

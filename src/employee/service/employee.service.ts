@@ -1,6 +1,6 @@
-import { PizzeriaError } from "../../exceptions/pizzeria.exceptions";
 import { EmployeeRole } from "../enum/employee.enum";
 import { EmployeeDTO } from "../model/employeeDTO";
+import { EmployeeServiceError } from "../error/employee.exception";
 
 export class EmployeeService {
   private readonly takenCheffs = new Set<EmployeeDTO>();
@@ -19,20 +19,20 @@ export class EmployeeService {
       this.availableCheffs.delete(cheff);
       return cheff;
     }
-    throw new PizzeriaError({
+    throw new EmployeeServiceError({
       name: "EMPLOYEE_ERROR",
       message: "There isn't free cheffs",
     });
   }
   isCheffAvailable(): boolean {
-    return this.availableCheffs.size > 0 ? true : false;
+    return this.availableCheffs.size > 0;
   }
   relievedCheff(cheff: EmployeeDTO) {
     if (this.takenCheffs.delete(cheff)) {
       this.availableCheffs.add(cheff);
       return;
     }
-    throw new PizzeriaError({
+    throw new EmployeeServiceError({
       name: "EMPLOYEE_ERROR",
       message: "This cheff wasn't taken",
     });

@@ -1,5 +1,5 @@
-import { PizzeriaError } from "../../../exceptions/pizzeria.exceptions";
 import { EmployeeRole } from "../../enum/employee.enum";
+import { EmployeeServiceError } from "../../error/employee.exception";
 import { EmployeeDTO } from "../../model/employeeDTO";
 import { EmployeeService } from "../employee.service";
 
@@ -36,14 +36,16 @@ describe("Employee service test suite", () => {
     expect(resultTwo).toMatchSnapshot();
     expect(resultThree).toMatchSnapshot();
   });
-  it("Should throw PizzeriaError if there isn't free cheff", () => {
+  it("Should throw EmployeeServiceError if there isn't free cheff", () => {
     //Given
     objectUnderTest.addCheffToCrew(mockedEmployeeNameOne);
     //When
     const resultOne = objectUnderTest.getCheffToOrder();
     //Then
     expect(resultOne).toMatchSnapshot();
-    expect(() => objectUnderTest.getCheffToOrder()).toThrow(PizzeriaError);
+    expect(() => objectUnderTest.getCheffToOrder()).toThrow(
+      EmployeeServiceError
+    );
   });
   it("Should return true if cheff is available", () => {
     //Given
@@ -71,7 +73,7 @@ describe("Employee service test suite", () => {
     expect(cheff).toMatchSnapshot();
     expect(objectUnderTest).toMatchSnapshot();
   });
-  it("Should throw PizzeriaError if there is not cheff wasn't taken", () => {
+  it("Should throw EmployeeServiceError if there is not cheff wasn't taken", () => {
     //Given
     objectUnderTest.addCheffToCrew(mockedEmployeeNameOne);
     const mockedCheff = new EmployeeDTO("test cheff", EmployeeRole.Cheff);
@@ -82,7 +84,7 @@ describe("Employee service test suite", () => {
     expect(cheff).toMatchSnapshot();
     expect(objectUnderTest).toMatchSnapshot();
     expect(() => objectUnderTest.relievedCheff(mockedCheff)).toThrow(
-      PizzeriaError
+      EmployeeServiceError
     );
   });
 });
