@@ -7,7 +7,7 @@ import { OrderService } from "../../order/service/order.service";
 import { PizzaDTO } from "../../pizza/model/pizzaDTO";
 import { PizzaService } from "../../pizza/service/pizza.service";
 import { ReservationService } from "../../reservation/service/reservation.service";
-import { TableDTO } from "../../reservation/table/tableDTO";
+import { DinnerTableDTO } from "../../reservation/table/dinnerTableDTO";
 import { Pizzeria } from "../pizzeria.component";
 jest.mock("../../employee/service/employee.service", () => {
   return {
@@ -58,7 +58,6 @@ jest.mock("../../reservation/service/reservation.service", () => {
 });
 describe("Pizzeria component test suite", () => {
   let objectUnderTest: Pizzeria;
-  let mockedPizzasNames: string[];
   let mockedPizza: PizzaDTO;
   let mockedCheff: EmployeeDTO;
   const mockedReservationService = new ReservationService();
@@ -123,7 +122,7 @@ describe("Pizzeria component test suite", () => {
     });
     it("Should book a table, make order and add to queque if there isn't cheff", () => {
       //Given
-      const mockedTable = new TableDTO(1, 2);
+      const mockedTable = new DinnerTableDTO(1, 2);
       const mockedSeats = 2;
       jest
         .spyOn(mockedReservationService, "getATable")
@@ -146,7 +145,7 @@ describe("Pizzeria component test suite", () => {
       expect(mockedOrderService.addOrderToQueque).toBeCalledTimes(1);
     });
     it("Should book a table, make order and add make in progress if there is free cheff", () => {
-      const mockedTable = new TableDTO(1, 2);
+      const mockedTable = new DinnerTableDTO(1, 2);
       const mockedSeats = 2;
       jest
         .spyOn(mockedReservationService, "getATable")
@@ -171,7 +170,7 @@ describe("Pizzeria component test suite", () => {
   });
   it("Should make order in progress", () => {
     //Given
-    const mockedOrder = new OrderDTO("test uuid", Discount.none, [mockedPizza]);
+    const mockedOrder = new OrderDTO("test uuid", Discount.NONE, [mockedPizza]);
     jest
       .spyOn(mockedEmploeeService, "getCheffToOrder")
       .mockReturnValue(mockedCheff);
@@ -185,7 +184,7 @@ describe("Pizzeria component test suite", () => {
   });
   it("Should complete order and return recipe", () => {
     //Given
-    const mockedOrder = new OrderDTO("test uuid", Discount.none, [mockedPizza]);
+    const mockedOrder = new OrderDTO("test uuid", Discount.NONE, [mockedPizza]);
     jest
       .spyOn(mockedOrderService, "completeOrderAndReturnCheff")
       .mockReturnValueOnce(mockedCheff);
@@ -202,7 +201,7 @@ describe("Pizzeria component test suite", () => {
     //Given
     const mockedOrder = new OrderDTO(
       "test uuid",
-      Discount.none,
+      Discount.NONE,
       [mockedPizza],
       42
     );

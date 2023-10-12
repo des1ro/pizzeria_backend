@@ -21,7 +21,7 @@ describe("Order service test suite", () => {
     const mockedPizzaTwo = new PizzaDTO("test pizza two", 50, []);
     mockedCheff = new EmployeeDTO("test employee", EmployeeRole.Cheff);
     mockedPizzas = [mockedPizzaOne, mockedPizzaTwo];
-    mockedOrderOne = new OrderDTO("1", Discount.none, mockedPizzas);
+    mockedOrderOne = new OrderDTO("1", Discount.NONE, mockedPizzas);
   });
   it("Should add order to queque", () => {
     //When
@@ -76,7 +76,7 @@ describe("Order service test suite", () => {
     //Given
     const mockedOrderTwo = new OrderDTO(
       "2",
-      Discount.wednesdayForKidsDiscount,
+      Discount.WEDNESDAY_FOR_KIDS_DISCOUNT,
       mockedPizzas
     );
     const expectedResultTwo = (20 + 50) * 0.9;
@@ -92,7 +92,7 @@ describe("Order service test suite", () => {
     //Given
     const mockedOrderTwo = new OrderDTO(
       "2",
-      Discount.studentThursdayDiscount,
+      Discount.STUDENT_THURSDAY_DISCOUNT,
       []
     );
     const mockedCompletedOrders = new Set<OrderDTO>();

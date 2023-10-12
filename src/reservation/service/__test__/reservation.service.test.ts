@@ -1,33 +1,33 @@
 import { PizzeriaError } from "../../../pizzeria/error/pizzeria.exceptions";
-import { TableDTO } from "../../table/tableDTO";
+import { DinnerTableDTO } from "../../table/dinnerTableDTO";
 import { ReservationService } from "../reservation.service";
 
 describe("Reservation service test suite", () => {
   let objectUnderTest: ReservationService;
-  let mockedTableOne: TableDTO;
-  let mockedTableTwo: TableDTO;
-  let mockedTableThree: TableDTO;
-  let mockedTables: Set<TableDTO>;
+  let mockedTableOne: DinnerTableDTO;
+  let mockedTableTwo: DinnerTableDTO;
+  let mockedTableThree: DinnerTableDTO;
+  let mockedTables: Set<DinnerTableDTO>;
   beforeEach(() => {
     objectUnderTest = new ReservationService();
   });
   beforeAll(() => {
-    mockedTableOne = new TableDTO(1, 2);
-    mockedTableTwo = new TableDTO(2, 5);
-    mockedTableThree = new TableDTO(3, 7);
+    mockedTableOne = new DinnerTableDTO(1, 2);
+    mockedTableTwo = new DinnerTableDTO(2, 5);
+    mockedTableThree = new DinnerTableDTO(3, 7);
   });
   beforeAll(() => {
-    mockedTables = new Set<TableDTO>()
-      .add(new TableDTO(1, 2))
-      .add(new TableDTO(2, 5))
-      .add(new TableDTO(3, 7))
-      .add(new TableDTO(4, 7))
-      .add(new TableDTO(5, 4))
-      .add(new TableDTO(6, 6))
-      .add(new TableDTO(7, 2))
-      .add(new TableDTO(8, 8))
-      .add(new TableDTO(9, 4))
-      .add(new TableDTO(10, 6));
+    mockedTables = new Set<DinnerTableDTO>()
+      .add(new DinnerTableDTO(1, 2))
+      .add(new DinnerTableDTO(2, 5))
+      .add(new DinnerTableDTO(3, 7))
+      .add(new DinnerTableDTO(4, 7))
+      .add(new DinnerTableDTO(5, 4))
+      .add(new DinnerTableDTO(6, 6))
+      .add(new DinnerTableDTO(7, 2))
+      .add(new DinnerTableDTO(8, 8))
+      .add(new DinnerTableDTO(9, 4))
+      .add(new DinnerTableDTO(10, 6));
   });
   describe("Add table to service test suite", () => {
     it("Should add table to service", () => {
@@ -49,7 +49,7 @@ describe("Reservation service test suite", () => {
   });
   it("Should add table to taken and remove from freeTabeles", () => {
     //Given
-    const freeTablesSet = new Set<TableDTO>();
+    const freeTablesSet = new Set<DinnerTableDTO>();
     freeTablesSet.add(mockedTableOne).add(mockedTableTwo);
     objectUnderTest = new ReservationService(freeTablesSet);
     //When
@@ -58,9 +58,9 @@ describe("Reservation service test suite", () => {
     expect(objectUnderTest).toMatchSnapshot();
   });
   describe("Get a table test suite", () => {
-    let freeTablesSet: Set<TableDTO>;
+    let freeTablesSet: Set<DinnerTableDTO>;
     beforeAll(() => {
-      freeTablesSet = new Set<TableDTO>();
+      freeTablesSet = new Set<DinnerTableDTO>();
       freeTablesSet
         .add(mockedTableOne)
         .add(mockedTableTwo)
@@ -93,7 +93,7 @@ describe("Reservation service test suite", () => {
     it("Should find table by id and set to available", () => {
       //Given
       objectUnderTest = new ReservationService(
-        new Set<TableDTO>(),
+        new Set<DinnerTableDTO>(),
         mockedTables
       );
       const mockedTableId = 4;
@@ -111,7 +111,7 @@ describe("Reservation service test suite", () => {
     it("Should throw error if table isn't in service", () => {
       //Given
       objectUnderTest = new ReservationService(
-        new Set<TableDTO>(),
+        new Set<DinnerTableDTO>(),
         mockedTables
       );
       //Then

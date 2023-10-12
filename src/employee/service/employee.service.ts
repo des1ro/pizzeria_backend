@@ -8,6 +8,18 @@ export class EmployeeService {
     private readonly availableCheffs = new Set<EmployeeDTO>(),
     readonly availableWaiters = new Set<EmployeeDTO>()
   ) {}
+
+  addWaiterToCrew(waiter: EmployeeDTO): void {
+    this.availableWaiters.add(waiter);
+  }
+  deleteWaiterFromCrew(employee: EmployeeDTO): void {
+    if (!this.availableWaiters.delete(employee)) {
+      throw new EmployeeServiceError({
+        name: "EMPLOYEE_ERROR",
+        message: "Waiter isn't on crew",
+      });
+    }
+  }
   addCheffToCrew(name: string): void {
     const cheff = new EmployeeDTO(name, EmployeeRole.Cheff);
     this.availableCheffs.add(cheff);

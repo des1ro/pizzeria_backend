@@ -16,7 +16,7 @@ export class Pizzeria {
   ) {}
   orderTakeawayAndGetRecipe(
     pizzas: PizzaDTO[],
-    discount = Discount.none
+    discount = Discount.NONE
   ): number {
     const uuid = this.getOrderUuidAndPrepareIngredients(pizzas);
     const order = new OrderDTO(uuid, discount, pizzas);
@@ -26,7 +26,7 @@ export class Pizzeria {
   orderInRestaurant(
     pizzas: PizzaDTO[],
     seats: number,
-    discount = Discount.none
+    discount = Discount.NONE
   ): void {
     const table = this.revservationService.getATable(seats);
     const uuid = this.getOrderUuidAndPrepareIngredients(pizzas);

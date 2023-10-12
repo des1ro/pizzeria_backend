@@ -1,12 +1,12 @@
 import { PizzeriaError } from "../../pizzeria/error/pizzeria.exceptions";
-import { TableDTO } from "../table/tableDTO";
+import { DinnerTableDTO } from "../table/dinnerTableDTO";
 
 export class ReservationService {
   constructor(
-    private readonly freeTables = new Set<TableDTO>(),
-    private readonly takenTables = new Set<TableDTO>()
+    private readonly freeTables = new Set<DinnerTableDTO>(),
+    private readonly takenTables = new Set<DinnerTableDTO>()
   ) {}
-  addTable(table: TableDTO): void {
+  addTable(table: DinnerTableDTO): void {
     if (!this.freeTables.has(table)) {
       this.freeTables.add(table);
       return;
@@ -18,7 +18,7 @@ export class ReservationService {
     });
   }
   getATable(seats: number) {
-    let tableToFind: TableDTO | undefined = undefined;
+    let tableToFind: DinnerTableDTO | undefined = undefined;
     for (const table of this.freeTables) {
       if (table.seats === seats) {
         tableToFind = table;
@@ -38,7 +38,7 @@ export class ReservationService {
       message: "There is no table for so many people",
     });
   }
-  bookATable(table: TableDTO): void {
+  bookATable(table: DinnerTableDTO): void {
     if (this.freeTables.delete(table)) this.takenTables.add(table);
   }
   setTableToAvailable(tableId: number | undefined) {
