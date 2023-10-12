@@ -13,6 +13,29 @@ EmployeeService {
 }
 `;
 
+exports[`Employee service test suite Should add waiter to crew 1`] = `
+EmployeeService {
+  "availableCheffs": Set {},
+  "availableWaiters": Set {
+    EmployeeDTO {
+      "name": "test employee",
+      "role": "Waiter",
+    },
+  },
+  "takenCheffs": Set {},
+}
+`;
+
+exports[`Employee service test suite Should delete waiter from crew 1`] = `Set {}`;
+
+exports[`Employee service test suite Should delete waiter from crew 2`] = `
+EmployeeService {
+  "availableCheffs": Set {},
+  "availableWaiters": Set {},
+  "takenCheffs": Set {},
+}
+`;
+
 exports[`Employee service test suite Should relived cheff 1`] = `
 EmployeeDTO {
   "name": "test employee one",

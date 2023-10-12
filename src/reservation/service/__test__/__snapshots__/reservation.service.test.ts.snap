@@ -3,15 +3,15 @@
 exports[`Reservation service test suite Add table to service test suite Should add table to service 1`] = `
 ReservationService {
   "freeTables": Set {
-    TableDTO {
+    DinnerTableDTO {
       "seats": 2,
       "tableId": 1,
     },
-    TableDTO {
+    DinnerTableDTO {
       "seats": 5,
       "tableId": 2,
     },
-    TableDTO {
+    DinnerTableDTO {
       "seats": 7,
       "tableId": 3,
     },
@@ -23,45 +23,45 @@ ReservationService {
 exports[`Reservation service test suite Set table to available test suite Should find table by id and set to available 1`] = `
 ReservationService {
   "freeTables": Set {
-    TableDTO {
+    DinnerTableDTO {
       "seats": 7,
       "tableId": 4,
     },
   },
   "takenTables": Set {
-    TableDTO {
+    DinnerTableDTO {
       "seats": 2,
       "tableId": 1,
     },
-    TableDTO {
+    DinnerTableDTO {
       "seats": 5,
       "tableId": 2,
     },
-    TableDTO {
+    DinnerTableDTO {
       "seats": 7,
       "tableId": 3,
     },
-    TableDTO {
+    DinnerTableDTO {
       "seats": 4,
       "tableId": 5,
     },
-    TableDTO {
+    DinnerTableDTO {
       "seats": 6,
       "tableId": 6,
     },
-    TableDTO {
+    DinnerTableDTO {
       "seats": 2,
       "tableId": 7,
     },
-    TableDTO {
+    DinnerTableDTO {
       "seats": 8,
       "tableId": 8,
     },
-    TableDTO {
+    DinnerTableDTO {
       "seats": 4,
       "tableId": 9,
     },
-    TableDTO {
+    DinnerTableDTO {
       "seats": 6,
       "tableId": 10,
     },
@@ -72,13 +72,13 @@ ReservationService {
 exports[`Reservation service test suite Should add table to taken and remove from freeTabeles 1`] = `
 ReservationService {
   "freeTables": Set {
-    TableDTO {
+    DinnerTableDTO {
       "seats": 5,
       "tableId": 2,
     },
   },
   "takenTables": Set {
-    TableDTO {
+    DinnerTableDTO {
       "seats": 2,
       "tableId": 1,
     },

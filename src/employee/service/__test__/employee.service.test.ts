@@ -22,6 +22,34 @@ describe("Employee service test suite", () => {
     //Then
     expect(objectUnderTest).toMatchSnapshot();
   });
+  it("Should add waiter to crew", () => {
+    //Given
+    const employee = new EmployeeDTO("test employee", EmployeeRole.Waiter);
+    //When
+    objectUnderTest.addWaiterToCrew(employee);
+    //Then
+    expect(objectUnderTest).toMatchSnapshot();
+  });
+  it("Should delete waiter from crew", () => {
+    //Given
+    const employee = new EmployeeDTO("test employee", EmployeeRole.Waiter);
+    //When
+    objectUnderTest.addWaiterToCrew(employee);
+    const result = objectUnderTest.availableWaiters;
+    objectUnderTest.deleteWaiterFromCrew(employee);
+    //Then
+    expect(result).toMatchSnapshot();
+    expect(objectUnderTest).toMatchSnapshot();
+  });
+  it("Should throw error if waiter isn't in the set", () => {
+    //Given
+    const employee = new EmployeeDTO("test employee", EmployeeRole.Waiter);
+    //When
+    //Then
+    expect(() => objectUnderTest.deleteWaiterFromCrew(employee)).toThrow(
+      EmployeeServiceError
+    );
+  });
   it("Should return which is firs on the list", () => {
     //Given
     objectUnderTest.addCheffToCrew(mockedEmployeeNameOne);

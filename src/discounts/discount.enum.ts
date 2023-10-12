@@ -1,6 +1,6 @@
 export enum Discount {
-  studentThursdayDiscount = 40,
-  wednesdayForKidsDiscount = 10,
-  codeDiscountOne = 20,
-  none = 0,
+  STUDENT_THURSDAY_DISCOUNT = 40,
+  WEDNESDAY_FOR_KIDS_DISCOUNT = 10,
+  CODE_DISCOUNT_ONE = 20,
+  NONE = 0,
 }
